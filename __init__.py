@@ -17,8 +17,8 @@ app.secret_key = 'many random bytes'
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'medusa1998'
-app.config['MYSQL_DB'] = 'student'
+app.config['MYSQL_PASSWORD'] = '123456c@'
+app.config['MYSQL_DB'] = 'logistic'
 
 mysql = MySQL(app)
 
@@ -126,5 +126,15 @@ def update():
         flash("Data Updated Successfully")
         mysql.connection.commit()
         return redirect(url_for('Index'))
+
+# giao dien đơn hàng mua hộ
+@app.route('/order')
+def order():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT  * FROM students")
+    data = cur.fetchall()
+    cur.close()
+    return render_template('order.html', students=data )
+
 if __name__ == "__main__":
     app.run(debug=True)
